@@ -1,0 +1,5 @@
+- npm install express 
+- npm install --save-dev nodemon 
+- npm install mongoose
+- npm install body-parser
+- npm install --save mongoose-unique-validator
