@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var transportesSchema = new Schema({
+var transportesPool = new Pool({
 
     numero_matricula: { type: BigInt, required: [true, 'el numero de matricula es necesaria'] },
     tipo_transporte: { type: String, required: [true, 'el tipo de transporte es necesario'] },
@@ -13,4 +13,8 @@ var transportesSchema = new Schema({
     placa: { type: String, required: [true, 'el placa es necesaria'] },
 });
 
-module.exports = mongoose.model('Transportes', transportesSchema);
+module.export = {
+    getConnection: (callback) => {
+        return transportesPool.getConnection(callback);
+    }
+}

@@ -1,11 +1,15 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var aseguradoresSchema = new Schema({
+var aseguradoresPool = new Pool({
 
     id: { type: Number },
     nombre_asegurador: { type: String, required: [true, 'el nombre es necesario'] },
 });
 
-module.exports = mongoose.model('Aseguradores', aseguradoresSchema);
+module.export = {
+    getConnection: (callback) => {
+        return aseguradoresPool.getConnection(callback);
+    }
+}

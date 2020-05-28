@@ -1,11 +1,15 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var tiposUsuariosSchema = new Schema({
+var tiposUsuariosPool = new Pool({
 
     id: { type: Number },
     tipo_usuario: { type: String, required: [true, 'el tipo usuario es necesario'] },
 });
 
-module.exports = mongoose.model('TiposUsuario', tiposUsuariosSchema);
+module.export = {
+    getConnection: (callback) => {
+        return tiposUsuariosPool.getConnection(callback);
+    }
+}

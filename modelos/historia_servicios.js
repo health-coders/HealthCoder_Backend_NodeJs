@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var historiasServicioSchema = new Schema({
+var historiasServicioPool = new Pool({
 
     id: { type: String },
     id_servicio: { 
@@ -16,4 +16,8 @@ var historiasServicioSchema = new Schema({
     ultima_actualizacion: { type: Date, required: [true, 'la actualizacion es necesaria'] },
 });
 
-module.exports = mongoose.model('HistoriasServicio', historiasServicioSchema);
+module.export = {
+    getConnection: (callback) => {
+        return historiasServicioPool.getConnection(callback);
+    }
+}

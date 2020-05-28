@@ -30,12 +30,12 @@ var connection = mysql.createConnection({
    database: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
    port: 3306
 });
-connection.connect(function(error){
-   if(error){
-      throw error;
-   }else{
-      console.log('Conexion correcta.');
+connection.connect(function(error) {
+   if (error) {
+       console.error('Error de conexion: ' + error.stack);
+       return;
    }
+   console.log('Conectado con el identificador ' + connection.threadId);
 });
 connection.end();
 
@@ -45,5 +45,5 @@ app.use('/', appRoutes);
 
 //escuchar peticiones
 app.listen(3000, () => {
-    console.log('-----Puerto 3306: \x1b[32m%s\x1b[0m', 'online', '-----');
+    console.log('-----Puerto 3000: \x1b[32m%s\x1b[0m', 'online', '-----');
 });

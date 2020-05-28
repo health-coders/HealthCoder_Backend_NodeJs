@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var serviciosSchema = new Schema({
+var serviciosPool = new Pool({
 
     id: { type: String },
     numero_servicio: { type: Number, required: [true, 'el numero de servicio es necesario'] },
@@ -21,4 +21,8 @@ var serviciosSchema = new Schema({
     fecha_confirmacion: { type: Date }
 });
 
-module.exports = mongoose.model('Servicios', serviciosSchema);
+module.export = {
+    getConnection: (callback) => {
+        return serviciosPool.getConnection(callback);
+    }
+}

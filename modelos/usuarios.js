@@ -1,15 +1,13 @@
 var mysql = require('mysql');
 
-var uniqueValidator = require('mongoose-unique-validator');
-
-var Schema = mysql.createPool;
+var Pool = mysql.createPool;
 
 var tiposUsuarioValidos = {
     values: ['USUARIO_ROLE', 'PARAMEDICO_ROLE', 'ADMIN_ROLE'],
     message: '{VALUE} no es un tipo de usuario permitido'
 }
 
-var usuariosSchema = new Schema({
+var usuariosPool = new Pool({
 
     id_nacional: { type: Number, required: [true, 'el id es necesario'] },
     nombre_1: { type: String, required: [true, 'el nombre es necesario'] },
@@ -28,6 +26,6 @@ var usuariosSchema = new Schema({
 
 module.export = {
     getConnection: (callback) => {
-        return usuariosSchema.getConnection(callback);
+        return usuariosPool.getConnection(callback);
     }
 }

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
 
-var Schema = mongoose.Schema;
+var Pool = mysql.createPool;
 
-var navegacionesSchema = new Schema({
+var navegacionesPool = new Pool({
 
     id: { type: Number },
     tipo_usuario: { 
@@ -15,4 +15,8 @@ var navegacionesSchema = new Schema({
      },
 });
 
-module.exports = mongoose.model('Navegaciones', navegacionesSchema);
+module.export = {
+    getConnection: (callback) => {
+        return navegacionesPool.getConnection(callback);
+    }
+}
