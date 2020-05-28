@@ -1,6 +1,18 @@
 var express = require('express');
 var mysql = require('mysql');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+
+/*const crendenciales = connection({
+    RDS_HOSTNAME='ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
+    //host: 'ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
+    RDS_USERNAME: 'innercityhealth',
+    //user: 'innercityhealth',
+    RDS_PASSWORD: 'H34lthC0d3r$',
+    //password: 'H34lthC0d3r$',
+    RDS_DB_NAME: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
+    //database: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
+    RDS_PORT: '3306'
+});*/
 
 var app = express();
 
@@ -24,18 +36,17 @@ var usuariosRoutes = require('./rutas/usuarios');
 
 //conexion a la base de datos
 var connection = mysql.createConnection({
-   host: 'ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
-   user: 'innercityhealth',
-   password: 'H34lthC0d3r$',
-   database: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
-   port: 3306
+    host: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    port: process.env.RDS_PORT
 });
-connection.connect(function(error) {
-   if (error) {
-       console.error('Error de conexion: ' + error.stack);
-       return;
-   }
-   console.log('Conectado con el identificador ' + connection.threadId);
+connection.connect(function (error) {
+    if (error) {
+        console.error('Error de conexion: ' + error.stack);
+        return;
+    }
+    console.log('Conectado con el identificador ' + connection.threadId);
 });
 connection.end();
 

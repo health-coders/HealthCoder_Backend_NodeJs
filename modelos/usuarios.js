@@ -16,7 +16,7 @@ var usuariosPool = new Pool({
     apellido_2: { type: String, required: [true, 'el segundo apellido es necesario'] },
     email: { type: String, unique: true, required: [true, 'el correo es necesario'] },
     numero_telefono: { type: Number, required: [true, 'el telefono es necesario'] },
-    tipo_usuario: { type: String, default: 'USUARIO_ROLE', enum: tiposUsuarioValidos },
+    tipo_usuario: {},
     contrasena: { type: String, required: [true, 'la contraseña es necesario'] },
     certificado_rethus: { type: Number },
     transporte: { type: Number },

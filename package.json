@@ -16,7 +16,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.15",
     "mongoose-unique-validator": "^2.0.3",
-    "mysql": "^2.18.1"
+    "mysql": "latest"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
