@@ -3,3 +3,5 @@
 - npm install mongoose
 - npm install body-parser
 - npm install --save mongoose-unique-validator
+- npm install mysql
+- npm install bcrypt

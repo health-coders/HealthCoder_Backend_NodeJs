@@ -1,5 +1,6 @@
 var express = require('express');
-var mongoose = require('mongoose');
+var mysql = require('mysql');
+var bodyParser = require('body-parser')
 
 var app = express();
 
@@ -17,13 +18,32 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+//importar rutas
+var appRoutes = require('./rutas/app');
+var usuariosRoutes = require('./rutas/usuarios');
+
 //conexion a la base de datos
-mongoose.connection.openUri('#', (err, res) => {
-    if (err) throw err;
-    console.log('base de datos: online');
+var connection = mysql.createConnection({
+   host: 'ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
+   user: 'innercityhealth',
+   password: 'H34lthC0d3r$',
+   database: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
+   port: 3306
 });
+connection.connect(function(error){
+   if(error){
+      throw error;
+   }else{
+      console.log('Conexion correcta.');
+   }
+});
+connection.end();
+
+//rutas
+app.use('/usuarios', usuariosRoutes);
+app.use('/', appRoutes);
 
 //escuchar peticiones
 app.listen(3000, () => {
-    console.log('-----Puerto 3001: \x1b[32m%s\x1b[0m', 'online', '-----');
+    console.log('-----Puerto 3306: \x1b[32m%s\x1b[0m', 'online', '-----');
 });

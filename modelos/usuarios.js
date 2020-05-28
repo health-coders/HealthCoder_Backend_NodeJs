@@ -1,7 +1,13 @@
-var mongoose = require('mongoose');
+var mysql = require('mysql');
+
 var uniqueValidator = require('mongoose-unique-validator');
 
-var Schema = mongoose.Schema;
+var Schema = mysql.createPool;
+
+var tiposUsuarioValidos = {
+    values: ['USUARIO_ROLE', 'PARAMEDICO_ROLE', 'ADMIN_ROLE'],
+    message: '{VALUE} no es un tipo de usuario permitido'
+}
 
 var usuariosSchema = new Schema({
 
@@ -12,17 +18,16 @@ var usuariosSchema = new Schema({
     apellido_2: { type: String, required: [true, 'el segundo apellido es necesario'] },
     email: { type: String, unique: true, required: [true, 'el correo es necesario'] },
     numero_telefono: { type: Number, required: [true, 'el telefono es necesario'] },
-    tipo_usuario: { 
-        type: Schema.Types.ObjectId,
-        ref: 'TiposUsuario', required: false
-     },
+    tipo_usuario: { type: String, default: 'USUARIO_ROLE', enum: tiposUsuarioValidos },
     contrasena: { type: String, required: [true, 'la contraseña es necesario'] },
     certificado_rethus: { type: Number },
-    transporte: { type: BigInt },
+    transporte: { type: Number },
     estado_usuario: { type: Number, required: [true, 'el estado es necesario'] },
     asegurador: { type: Number },
 });
 
-usuariosSchema.plugin(uniqueValidator, { message: 'el {PATH} debe ser unico' });
-
-module.exports = mongoose.model('Usuarios', usuariosSchema);
+module.export = {
+    getConnection: (callback) => {
+        return usuariosSchema.getConnection(callback);
+    }
+}

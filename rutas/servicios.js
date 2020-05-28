@@ -1,175 +1,163 @@
 //requires
 var express = require('express');
-var bcrypt = require('bcryptjs');
-//var jwt = require('jsonwebtoken');
-
-var mdAutenticacion = require('../middlewares/autenticacion');
 
 //inicializar variables
 var app = express();
 
-var Usuarios = require('../modelos/usuarios');
+var Servicios = require('../modelos/servicios');
 
 //---------------------------------------------------------
-// obtener todos los usuarios
+// obtener todos los servicio
 //--------------------------------------------------------
 app.get('/', (req, res, next) => {
 
-    Usuarios.find({}, 'nombre email telefono distrito img cargo')
+    Servicios.find({}, 'Id numero tipo solicitante prestador fechaGen prioridad descripción fechaConf')
         .exec(
-            (err, usuarios) => {
+            (err, servicios) => {
 
                 if (err) {
                     return res.status(500).json({
                         ok: false,
-                        mensaje: 'error usuarios',
+                        mensaje: 'error Servicios',
                         errors: err
                     });
                 }
 
-                Usuarios.countDocuments({}, (err, conteo) => {
+                Servicios.countDocuments({}, (err, conteo) => {
 
                     res.status(200).json({
                         ok: true,
                         total: conteo,
-                        usuario: usuarios
+                        servicio: servicios
                     });
                 });
             })
 });
 
 //---------------------------------------------------------
-// crear un nuevo usuario
+// crear un nuevo Servicio
 //--------------------------------------------------------
 app.post('/', (req, res) => {
 
     var body = req.body;
 
-    var usuario = new Usuarios({
-        id_nacional: body.id_nacional,
-        nombre_1: body.nombre_1,
-        name_2: body.name_2,
-        apellido_1: body.apellido_1,
-        apellido_2: body.apellido_2,
-        email: body.email,
-        numero_telefono: body.numero_telefono,
-        tipo_usuario: body.tipo_usuario,
-        contraseña: bcrypt.hashSync(body.contraseña, 10),
-        certificado_rethus: body.certificado_rethus,
-        transporte: body.transporte,
-        estado_usuario: body.estado_usuario,
-        asegurador: body.asegurador,
+    var servicio = new Servicios({
+
+        numero_servicio: body.numero_servicio,
+        tipo_servicio: body.tipo_servicio,
+        solicitante: body.solicitante,
+        prestador: body.prestador,
+        fecha_generacion: body.fecha_generacion,
+        prioridad: body.prioridad,
+        descripcion: body.descripcion,
+        fecha_confirmacion: body.fecha_confirmacion,
+
     });
 
-    usuario.save((err, usuarioGuardado) => {
+    servicio.save((err, servicioGuardado) => {
 
         if (err) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'error al crear usuarios',
+                mensaje: 'error al crear servicio',
                 errors: err
             });
         }
 
         res.status(201).json({
             ok: true,
-            usuario: usuarioGuardado,
-            usuarioToken: req.usuario
+            servicio: servicioGuardado,
+            servicioToken: req.servicio
         });
 
     });
 });
 
+
+
 //---------------------------------------------------------
-// actualizar usuario
+// actualizar servicio
 //--------------------------------------------------------
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id', (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
 
-    Usuarios.findOneAndUpdate(id, (err, usuario) => {
+    Servicios.findOneAndUpdate(id, (err, servicio) => {
 
-        console.log('u: ' + usuario);
+        console.log('u: ' + servicio);
 
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'error al buscar usuarios',
+                mensaje: 'error al buscar servicios',
                 errors: err
             });
         }
 
-        if (!usuario) {
+        if (!servicio) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'el usuario ' + id + ' no existe',
-                errors: { message: 'no existe el usuario con ese ID' }
+                mensaje: 'el servicio ' + id + ' no existe',
+                errors: { message: 'no existe el servicio con ese ID' }
             });
         }
 
-        usuario.id_nacional = body.id_nacional;
-        usuario.nombre_1 = body.nombre_1;
-        usuario.name_2 = body.name_2;
-        usuario.apellido_1 = body.apellido_1;
-        usuario.apellido_2 = body.apellido_2;
-        usuario.email = body.email;
-        numero_telefono = body.numero_telefono;
-        usuario.tipo_usuario = body.tipo_usuario;
-        usuario.contraseña = bcrypt.hashSync(body.contraseña, 10);
-        usuario.certificado_rethus = body.certificado_rethus;
-        usuario.transporte = body.transporte;
-        usuario.estado_usuario = body.estado_usuario;
-        usuario.asegurador = body.asegurador;
+        servicio.numero_servicio = body.numero_servicio;
+        servicio.tipo_servicio = body.tipo_servicio;
+        servicio.solicitante = body.solicitante;
+        servicio.prestador = body.prestador;
+        servicio.fecha_generacion = body.fecha_generacion;
+        servicio.prioridad = body.prioridad;
+        servicio.descripcion = body.descripcion;
+        servicio.fecha_confirmacion = body.fecha_confirmacion;
 
-        usuario.save((err, usuarioGuardado) => {
+        servicio.save((err, servicioGuardado) => {
 
             if (err) {
                 return res.status(400).json({
                     ok: false,
-                    mensaje: 'error al actualizar usuarios',
+                    mensaje: 'error al actualizar servicio',
                     errors: err
                 });
             }
 
-            usuarioGuardado.contraseña = ':P';
-
             res.status(200).json({
                 ok: true,
-                usuario: usuarioGuardado
+                servicio: servicioGuardado
             });
         });
     });
 });
 
 //---------------------------------------------------------
-// eliminar usuario
+// eliminar servicio
 //--------------------------------------------------------
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id', (req, res) => {
 
     var id = req.params.id;
 
-    Usuarios.findByIdAndRemove(id, (err, usuarioEliminado) => {
+    Servicios.findByIdAndRemove(id, (err, servicioEliminado) => {
 
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'error al borrar usuario',
+                mensaje: 'error al borrar servicio',
                 errors: err
             });
         }
 
-        if (!usuarioEliminado) {
+        if (!servicioEliminado) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'No existe un usuario con ese ID',
-                errors: { message: 'no existe usuario con ese id' }
+                mensaje: 'No existe un servicio con ese ID',
+                errors: { message: 'no existe servicio con ese id' }
             });
         }
 
         res.status(200).json({
             ok: true,
-            usuario: usuarioEliminado
+            servicio: servicioEliminado
         });
     });
 });
