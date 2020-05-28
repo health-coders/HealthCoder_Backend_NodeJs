@@ -2,17 +2,16 @@ var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
-/*const crendenciales = connection({
-    RDS_HOSTNAME='ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
-    //host: 'ec2-18-221-13-9.us-east-2.compute.amazonaws.com',
-    RDS_USERNAME: 'innercityhealth',
-    //user: 'innercityhealth',
-    RDS_PASSWORD: 'H34lthC0d3r$',
-    //password: 'H34lthC0d3r$',
-    RDS_DB_NAME: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
-    //database: 'innercityhealth-dev.cogcg5odjeaf.us-east-2.rds.amazonaws.com',
-    RDS_PORT: '3306'
-});*/
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+require('dotenv').config({
+    path: `.env.${NODE_ENV}`
+});
+
+console.log(process.env.RDS_HOSTNAME);
+console.log(process.env.RDS_USERNAME);
+console.log(process.env.RDS_PASSWORD);
+console.log(process.env.RDS_PORT);
 
 var app = express();
 
@@ -55,6 +54,6 @@ app.use('/usuarios', usuariosRoutes);
 app.use('/', appRoutes);
 
 //escuchar peticiones
-app.listen(3000, () => {
-    console.log('-----Puerto 3000: \x1b[32m%s\x1b[0m', 'online', '-----');
+app.listen(3001, () => {
+    console.log('-----Puerto 3001: \x1b[32m%s\x1b[0m', 'online', '-----');
 });

@@ -1,9 +1,5 @@
 //requires
 var express = require('express');
-var bcrypt = require('bcryptjs');
-//var jwt = require('jsonwebtoken');
-
-var mdAutenticacion = require('../middlewares/autenticacion');
 
 //inicializar variables
 var app = express();
@@ -46,7 +42,6 @@ app.post('/', (req, res) => {
     var body = req.body;
 
     var usuario = new Usuarios({
-        id_nacional: body.id_nacional,
         nombre_1: body.nombre_1,
         name_2: body.name_2,
         apellido_1: body.apellido_1,
@@ -54,7 +49,8 @@ app.post('/', (req, res) => {
         email: body.email,
         numero_telefono: body.numero_telefono,
         tipo_usuario: body.tipo_usuario,
-        contraseña: bcrypt.hashSync(body.contraseña, 10),
+        contrasena: body.contrasena,
+        //contraseña: bcrypt.hashSync(body.contraseña, 10),
         certificado_rethus: body.certificado_rethus,
         transporte: body.transporte,
         estado_usuario: body.estado_usuario,
@@ -83,7 +79,7 @@ app.post('/', (req, res) => {
 //---------------------------------------------------------
 // actualizar usuario
 //--------------------------------------------------------
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id', (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -108,7 +104,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
 
-        usuario.id_nacional = body.id_nacional;
         usuario.nombre_1 = body.nombre_1;
         usuario.name_2 = body.name_2;
         usuario.apellido_1 = body.apellido_1;
@@ -116,7 +111,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
         usuario.email = body.email;
         numero_telefono = body.numero_telefono;
         usuario.tipo_usuario = body.tipo_usuario;
-        usuario.contraseña = bcrypt.hashSync(body.contraseña, 10);
         usuario.certificado_rethus = body.certificado_rethus;
         usuario.transporte = body.transporte;
         usuario.estado_usuario = body.estado_usuario;
@@ -132,8 +126,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
                 });
             }
 
-            usuarioGuardado.contraseña = ':P';
-
             res.status(200).json({
                 ok: true,
                 usuario: usuarioGuardado
@@ -145,7 +137,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 //---------------------------------------------------------
 // eliminar usuario
 //--------------------------------------------------------
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id', (req, res) => {
 
     var id = req.params.id;
 

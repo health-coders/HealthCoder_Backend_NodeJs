@@ -2,11 +2,6 @@ var mysql = require('mysql');
 
 var Pool = mysql.createPool;
 
-var tiposUsuarioValidos = {
-    values: ['USUARIO_ROLE', 'PARAMEDICO_ROLE', 'ADMIN_ROLE'],
-    message: '{VALUE} no es un tipo de usuario permitido'
-}
-
 var usuariosPool = new Pool({
 
     id_nacional: { type: Number, required: [true, 'el id es necesario'] },
