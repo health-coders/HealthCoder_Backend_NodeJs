@@ -8,44 +8,43 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 //inicializar variables
 var app = express();
 
-var Navegaciones = require('../modelos/Navegaciones');
+var HistoriasServicio = require('../modelos/HistoriasServicio');
 
 //---------------------------------------------------------
-// obtener todos los Navegaciones
+// obtener todos los Historias de Servicio
 //--------------------------------------------------------
 app.get('/', (req, res, next) => {
 
-    Navegaciones.find({}, 'Id numero tipo solicitante prestador fechaGen prioridad descripción fechaConf')
+    HistoriasServicio.find({}, 'Id numero tipo solicitante prestador fechaGen prioridad descripción fechaConf')
         .exec(
-            (err, navegaciones) => {
+            (err, historiasServicio) => {
 
                 if (err) {
                     return res.status(500).json({
                         ok: false,
-                        mensaje: 'error Navegaciones',
+                        mensaje: 'error HistoriasServicio',
                         errors: err
                     });
                 }
-
-                Navegaciones.countDocuments({}, (err, conteo) => {
+                HistoriasServicio.countDocuments({}, (err, conteo) => {
 
                     res.status(200).json({
                         ok: true,
                         total: conteo,
-                        navegacion: navegaciones
+                        historiasServicio: historiasServicios
                     });
                 });
             })
 });
 
 //---------------------------------------------------------
-// crear un nueva Navegacion
+// crear un nueva historiasServicio
 //--------------------------------------------------------
 app.post('/', (req, res) => {
 
     var body = req.body;
 
-    var navegacion = new Navegaciones({
+    var historiasServicio = new HistoriasServicio({
 
         id: body.id,
         tipo_usuario: body.tipo_usuario,
@@ -53,20 +52,20 @@ app.post('/', (req, res) => {
 
     });
 
-    navegacion.save((err, navegacionGuardado) => {
+    historiasServicio.save((err, historiasServicioGuardado) => {
 
         if (err) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'error al crear navegacion',
+                mensaje: 'error al crear historiasServicio',
                 errors: err
             });
         }
 
         res.status(201).json({
             ok: true,
-            navegacion: navegacionGuardado,
-            navegacionToken: req.navegacion
+            historiasServicio: historiasServicioGuardado,
+            historiasServicioToken: req.historiasServicio
         });
 
     });
