@@ -4,3 +4,5 @@
 - npm install body-parser --save
 - npm install dotenv --save
 - npm install mongoose --save
+- npm install mysqljs/mysql
+- npm install @types/mysql --save-dev

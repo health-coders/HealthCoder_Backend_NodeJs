@@ -1,12 +1,20 @@
-var mysql = require('mysql');
+//var mysql = require('mysql');
+var mongoose = require('mongoose');
 
-var tipos = require('./tipos_usuario');
+var Schema = mongoose.Schema;
 
-var Pool = mysql.createPool;
+var tiposUsuarioValidos = {
+    values: [
+        'USUARIO',
+        'PARAMEDICO',
+        'ADMINISTRADOR'
+    ],
+    message: '{VALUE} no es un tipo de usuario permitido'
+}
 
-var usuariosPool = new Pool({
+var usuariosPool = new Schema({
 
-    id_nacional: { type: Number, required: [true, 'el id es necesario'] },
+    id_nacional: { type: String },
     nombre_1: { type: String, required: [true, 'el nombre es necesario'] },
     name_2: { type: String },
     apellido_1: { type: String, required: [true, 'el apellido es necesario'] },
@@ -14,7 +22,7 @@ var usuariosPool = new Pool({
     email: { type: String, unique: true, required: [true, 'el correo es necesario'] },
     numero_telefono: { type: Number, required: [true, 'el telefono es necesario'] },
     tipo_usuario: {
-        
+        type: Number
     },
     contrasena: { type: String, required: [true, 'la contraseña es necesario'] },
     certificado_rethus: { type: Number },
@@ -23,8 +31,10 @@ var usuariosPool = new Pool({
     asegurador: { type: Number },
 });
 
-module.export = {
+module.exports = mongoose.model('Usuarios', usuariosPool);
+
+/*module.export = {
     getConnection: (callback) => {
         return usuariosPool.getConnection(callback);
     }
-}
+}*/

@@ -1,5 +1,6 @@
 //requires
 var express = require('express');
+var connection = require('express-myconnection')
 
 //inicializar variables
 var app = express();
@@ -42,7 +43,7 @@ app.post('/', (req, res) => {
     var body = req.body;
 
     var usuario = new Usuarios({
-        
+
         nombre_1: body.nombre_1,
         name_2: body.name_2,
         apellido_1: body.apellido_1,
@@ -57,7 +58,13 @@ app.post('/', (req, res) => {
         asegurador: body.asegurador,
     });
 
+    //usuario.id_nacional = usuario._id;
+
+    console.log(usuario);
+
     usuario.save((err, usuarioGuardado) => {
+
+        console.log('guardandooooo');
 
         if (err) {
             return res.status(400).json({
