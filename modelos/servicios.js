@@ -7,12 +7,10 @@ var serviciosPool = new Pool({
     id: { type: String },
     numero_servicio: { type: Number, required: [true, 'el numero de servicio es necesario'] },
     tipo_servicio: { 
-        type: Schema.Types.ObjectId,
-        ref: 'TiposServicio', required: false
+
      },
     solicitante: { 
-        type: Schema.Types.ObjectId,
-        ref: 'Usuarios', required: false
+        
      },
     prestador: { type: String },
     fecha_generacion: { type: Date, required: [true, 'la fecha es necesaria'] },
