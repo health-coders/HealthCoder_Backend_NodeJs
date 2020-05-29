@@ -1,21 +1,30 @@
 {
-  "name": "healtcoders",
+  "name": "innercityhealth",
   "version": "1.0.0",
-  "description": "backend healtcoders",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Steven Rodriguez - Jackson Palacios",
-  "license": "ISC",
+  "description": "backend healthcoders",
+  "main": "app.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.9.16",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  }
+  },
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/health-coders/HealthCoder_Backend_NodeJs.git"
+  },
+  "author": "Steven Rodriguez - Jackson Palacios",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/health-coders/HealthCoder_Backend_NodeJs/issues"
+  },
+  "homepage": "https://github.com/health-coders/HealthCoder_Backend_NodeJs#readme"
 }

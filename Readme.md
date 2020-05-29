@@ -1,7 +1,6 @@
-- npm install express 
+- npm install express --save
 - npm install --save-dev nodemon 
-- npm install mongoose
-- npm install body-parser
-- npm install --save mongoose-unique-validator
-- npm install mysql
-- npm install bcrypt
+- npm install mysql --save
+- npm install body-parser --save
+- npm install dotenv --save
+- npm install mongoose --save
