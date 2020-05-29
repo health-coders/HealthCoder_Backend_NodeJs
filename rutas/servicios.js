@@ -1,9 +1,5 @@
 //requires
 var express = require('express');
-var bcrypt = require('bcryptjs');
-//var jwt = require('jsonwebtoken');
-
-var mdAutenticacion = require('../middlewares/autenticacion');
 
 //inicializar variables
 var app = express();
@@ -46,7 +42,6 @@ app.post('/', (req, res) => {
     var body = req.body;
 
     var servicio = new Servicios({
-        id: body.id,
         numero_servicio: body.numero_servicio,
         tipo_servicio: body.tipo_servicio,
         solicitante: body.solicitante,
@@ -82,7 +77,7 @@ app.post('/', (req, res) => {
 //---------------------------------------------------------
 // actualizar servicio
 //--------------------------------------------------------
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id', (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -107,7 +102,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
 
-        servicio.id = body.id,
         servicio.numero_servicio = body.numero_servicio;
         servicio.tipo_servicio = body.tipo_servicio;
         servicio.solicitante = body.solicitante;
@@ -140,7 +134,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 //---------------------------------------------------------
 // eliminar servicio
 //--------------------------------------------------------
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id', (req, res) => {
 
     var id = req.params.id;
 

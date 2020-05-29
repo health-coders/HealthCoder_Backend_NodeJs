@@ -1,9 +1,5 @@
 //requires
 var express = require('express');
-var bcrypt = require('bcryptjs');
-//var jwt = require('jsonwebtoken');
-
-var mdAutenticacion = require('../middlewares/autenticacion');
 
 //inicializar variables
 var app = express();
@@ -81,7 +77,7 @@ app.post('/', (req, res) => {
 //---------------------------------------------------------
 // actualizar transporte
 //--------------------------------------------------------
-app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.put('/:id', (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -138,7 +134,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 //---------------------------------------------------------
 // eliminar transporte
 //--------------------------------------------------------
-app.delete('/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/:id', (req, res) => {
 
     var id = req.params.id;
 

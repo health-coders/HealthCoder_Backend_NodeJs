@@ -11,7 +11,7 @@ var Usuarios = require('../modelos/usuarios');
 //--------------------------------------------------------
 app.get('/', (req, res, next) => {
 
-    Usuarios.find({}, 'nombre email telefono distrito img cargo')
+    Usuarios.find({}, 'id_nacional nombre_1 email numero_telefono tipo_usuario')
         .exec(
             (err, usuarios) => {
 
@@ -42,6 +42,7 @@ app.post('/', (req, res) => {
     var body = req.body;
 
     var usuario = new Usuarios({
+        
         nombre_1: body.nombre_1,
         name_2: body.name_2,
         apellido_1: body.apellido_1,
@@ -50,7 +51,6 @@ app.post('/', (req, res) => {
         numero_telefono: body.numero_telefono,
         tipo_usuario: body.tipo_usuario,
         contrasena: body.contrasena,
-        //contraseña: bcrypt.hashSync(body.contraseña, 10),
         certificado_rethus: body.certificado_rethus,
         transporte: body.transporte,
         estado_usuario: body.estado_usuario,
